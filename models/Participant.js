@@ -30,13 +30,13 @@ var Participant = new Schema({
   
 }, {timestamps: true});
 
-
+/*
 
 var posts = new Schema ({
   firstName: {type: Schema.Types.ObjectId, ref: ParticipantModel},
   title: String,  
   post: String,
-  category: {
+  /*category: {
     type: String, 
     enum: ['mentalHealth', 'jobs', 'goodNews']
     //this specifies the set of allowed values. 
@@ -47,10 +47,11 @@ var posts = new Schema ({
   },
 }, {timestamps: true})
 
+*/
 //timestamps creates createdAt & updatedAt models and will automatically update when model changes 
 
 // Compile model from schema
 var ParticipantModel = mongoose.model('Participant', Participant);
-var PostsModel = mongoose.model('Posts', posts);
+//var PostsModel = mongoose.model('Posts', posts);
 
-module.exports = ParticipantModel, PostsModel;
+module.exports = ParticipantModel; //PostsModel;

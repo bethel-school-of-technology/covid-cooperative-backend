@@ -1,6 +1,6 @@
 // User Auth 
 
-router.post('/', function (req, res, next) {
+router.post('/', function (req, res) {
     let token = req.cookies.token;
     authService.verifyParticipant(token).then(participant => {
         if (participant) {
@@ -12,7 +12,7 @@ router.post('/', function (req, res, next) {
 })
 
 // Admin Auth 
-router.post('/', function (req, res, next) {
+router.post('/', function (req, res) {
 let token = req.cookies.token 
 authService.verifyParticipant(token).then(participant => {
     if (participant) {

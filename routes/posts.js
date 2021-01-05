@@ -7,14 +7,7 @@ var authService = require('../Services/authService')
 // POST route to save post information from front end 
 
 router.post('/', function (req, res, next) {
-  let token = req.cookies.token;
-  authService.verifyParticipant(token).then(participant => {
-      if (participant) {
-        
-      } else {
-          return res.json({ message: "Please Login" })
-      }
-  })
+  
 })
 
 module.exports = router;
