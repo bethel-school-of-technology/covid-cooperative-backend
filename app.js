@@ -10,7 +10,7 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://teamgo1:readysetgo@cluster0.zmecc.mongodb.net/Covid-Cooperative?retryWrites=true&w=majority', {useNewUrlParser: true});
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var postsRouter = require('./routes/posts');
 var participantsRouter = require('./routes/participants');
 
 //readysetgo
@@ -27,9 +27,9 @@ app.use(cors());
 app.use(bodyParser.json()); 
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/posts', postsRouter);
 app.use('/participants', participantsRouter);
-
+``
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));

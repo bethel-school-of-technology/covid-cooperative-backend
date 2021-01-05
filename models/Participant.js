@@ -26,11 +26,31 @@ var Participant = new Schema({
   deleted: {
     type: Boolean, 
     default: false, 
-  }
+  },
+  
 }, {timestamps: true});
+
+
+
+var posts = new Schema ({
+  firstName: {type: Schema.Types.ObjectId, ref: ParticipantModel},
+  title: String,  
+  post: String,
+  category: {
+    type: String, 
+    enum: ['mentalHealth', 'jobs', 'goodNews']
+    //this specifies the set of allowed values. 
+  }, 
+  deleted: {
+    type: Boolean, 
+    default: false
+  },
+}, {timestamps: true})
+
 //timestamps creates createdAt & updatedAt models and will automatically update when model changes 
 
 // Compile model from schema
 var ParticipantModel = mongoose.model('Participant', Participant);
+var PostsModel = mongoose.model('Posts', posts);
 
-module.exports = ParticipantModel;
+module.exports = ParticipantModel, PostsModel;
