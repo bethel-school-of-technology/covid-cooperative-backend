@@ -4,27 +4,6 @@ var Participant = require('../models/Participant');
 const { signupValidation, loginValidation } = require('../Services/validation');
 var authService = require('../Services/authService')
 
-//TOKEN ROUTE 
-
-router.post('/token', function (req, res, next) {
-  let token = req.cookies.token;
-
-  if (!token) {
-    res.json({ Participant: null, token: null });
-    return;
-  }
-  authService.verifyParticipant(token).then(participant => {
-
-    if (!participant) {
-      res.json({ Participant: null, token: null });
-    }
-
-    let token = authService.signParticipant(participant);
-    res.cookie('token', token, { httpOnly: true });
-    res.json({ participant, token })
-  });
-});
-
 // SIGN IN ROUTE 
 
 router.post("/signup", async (req, res) => {
@@ -58,7 +37,6 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-
   //LOGIN ROUTE
 
   router.post('/login', async (req, res) => {
@@ -86,10 +64,6 @@ router.post("/signup", async (req, res) => {
       }
     }
   });
-
-
-
-//LOGOUT ROUTE
 
 module.exports = router;
 
