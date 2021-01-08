@@ -7,7 +7,8 @@ var Participant = require('./Participant')
 var Schema = mongoose.Schema;
 
 var posts = new Schema ({
-  firstName: {type: Schema.Types.ObjectId, ref: Participant},
+  // firstname: {type: Schema.Types.ObjectId, ref: Participant},
+  firstname: String,
   title: String,  
   post: String,
   /*category: {

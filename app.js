@@ -36,7 +36,7 @@ app.use(bodyParser.json());
 app.use('/', indexRouter);
 app.use('/posts', postsRouter);
 app.use('/participants', participantsRouter);
-``
+
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
