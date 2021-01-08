@@ -24,7 +24,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(cors({
-  origin: "http://localhost:3001",
+  origin: "http://localhost:3001", //why is this 3001?
   credentials: true
 })); 
 app.use(bodyParser.json()); 
