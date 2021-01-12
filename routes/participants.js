@@ -50,6 +50,7 @@ router.post('/add', async function(req,res){
       data: { participant: newParticipant }
     });
   } catch (err) {
+    console.log(err)
     res.status(400).json({
       status: 'fail',
       message: err
@@ -101,16 +102,17 @@ router.delete('/delete/:id', async function(req,res){
 // SIGN IN ROUTE 
 
 router.post("/signup", async (req, res) => {
+  console.log(req.body)
   // validate the user 
   const { error } = signupValidation(req.body);
   if (error) {
-    return res.status(400).json({ error: error.details[0].message });
+    //return res.status(400).json({ error: error.details[0].message });
+    return res.json({ error: error.details[0].message });
   }
   // check if email is already registered, if yes send an error 
   const doesEmailExist = await Participant.findOne({ email: req.body.email });
   if (doesEmailExist)
-    return res.status(400).json({ error: 'Email already exists' });
-
+    return res.json({ error: 'Email already exists' });
   const participant = new Participant({
     client: {
       firstname: req.body.firstname,
@@ -127,7 +129,7 @@ router.post("/signup", async (req, res) => {
     const savedParticipant = await participant.save();
     res.json({ error: null, data: savedParticipant });
   } catch (error) {
-    res.status(400).json({ error });
+    res.json({ error });
   }
 });
 
