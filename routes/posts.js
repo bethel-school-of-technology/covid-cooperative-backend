@@ -1,9 +1,27 @@
 const { request } = require('express');
 var express = require('express');
 var router = express.Router();
-var Participant = require('../models/Participant');
+//var Participant = require('../models/Participant');
 var posts = require('../models/Posts')
 var authService = require('../Services/authService')
+
+// GET ROUTE FOR ALL POSTS
+
+router.get('/allPosts', async function(req,res) {
+  try {
+    const allPosts = await posts.find();
+    console.log(allPosts)
+    res.status(200).json({
+      data: { allPosts }
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err
+    });
+  }
+});
+
 
 // POST route to save post information from front end 
 
