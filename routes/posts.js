@@ -27,12 +27,13 @@ router.get('/allPosts', async function(req,res) {
 
 router.post('/', async (req, res ) => {
    if (Object.keys(req.body).length === 0){
-     return res.status(400).send({
-       message: "Invalid Submission"
+     return res.send({
+       message: "Invalid Submission",
+       status: 400
      });
    }
    const post = new posts ({
-        firstname: req.body.firstname, // when adding jwt token change to user.firstname
+        //firstname: req.body.firstname, // when adding jwt token change to user.firstname
         title: req.body.title,
         post: req.body.post,
         /*category: {
@@ -44,11 +45,11 @@ router.post('/', async (req, res ) => {
     console.log(post)
     try {
       const savedPost = await post.save();
-      res.json({ error: null, data: savedPost });
+      res.json({ error: null, data: savedPost, status: 200 });
       console.log(savedPost)
     } catch (error) {
       console.log(error)
-      res.status(400).json({ error });
+      res.json({ error, status: 400});
     }
   });
 

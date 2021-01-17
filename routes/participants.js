@@ -110,9 +110,13 @@ router.post("/signup", async (req, res) => {
     return res.json({ error: error.details[0].message });
   }
   // check if email is already registered, if yes send an error 
-  const doesEmailExist = await Participant.findOne({ email: req.body.email });
-  if (doesEmailExist)
-    return res.json({ error: 'Email already exists' });
+  const doesEmailExist = await Participant.findOne({ "client.email": req.body.email });
+  console.log("--------")
+  console.log(doesEmailExist)
+  if (doesEmailExist) {
+    
+    return res.json({ error: 'Email already exists' , status: 400 });
+  }
   const participant = new Participant({
     client: {
       firstname: req.body.firstname,
@@ -127,9 +131,9 @@ router.post("/signup", async (req, res) => {
   })
   try {
     const savedParticipant = await participant.save();
-    res.json({ error: null, data: savedParticipant });
+    res.json({ error: null, data: savedParticipant, status: 200 });
   } catch (error) {
-    res.json({ error });
+    res.json({ error, status:400 });
   }
 });
 
