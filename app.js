@@ -2,7 +2,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var cors = require('cors'); 
+var cors = require('cors'); //protects unauthorized people from making requests
 var bodyParser = require('body-parser'); 
 
 
@@ -11,7 +11,7 @@ mongoose.connect('mongodb+srv://teamgo1:readysetgo@cluster0.zmecc.mongodb.net/Co
 
 var indexRouter = require('./routes/index');
 var postsRouter = require('./routes/posts');
-var participantsRouter = require('./routes/participants');
+var participantsRouter = require('./routes/participants'); //importing routes in participant.js
 
 //readysetgo
 
@@ -35,7 +35,7 @@ app.use(bodyParser.json());
 
 app.use('/', indexRouter);
 app.use('/posts', postsRouter);
-app.use('/participants', participantsRouter);
+app.use('/participants', participantsRouter); //importing routes in participant.js
 
 
 const db = mongoose.connection;

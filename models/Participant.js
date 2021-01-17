@@ -1,6 +1,7 @@
 //Require Mongoose
 var mongoose = require('mongoose');
 
+// note: best for models to be singular
 
 // Define schema
 var Schema = mongoose.Schema;
