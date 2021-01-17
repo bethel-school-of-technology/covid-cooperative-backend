@@ -6,6 +6,8 @@ var posts = require('../models/Posts')
 var authService = require('../Services/authService')
 
 // GET ROUTE FOR ALL POSTS
+// I used a similar get route as in participants js. however, now
+// this get route will be pulling from the posts schema.
 
 router.get('/allPosts', async function(req,res) {
   try {

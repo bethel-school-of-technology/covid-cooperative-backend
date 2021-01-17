@@ -11,11 +11,6 @@ var posts = new Schema ({
   firstname: String,
   title: String,  
   post: String,
-  /*category: {
-    type: String, 
-    enum: ['mentalHealth', 'jobs', 'goodNews']
-    //this specifies the set of allowed values. 
-  }, */
   deleted: {
     type: Boolean, 
     default: false
