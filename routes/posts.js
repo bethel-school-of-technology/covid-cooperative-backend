@@ -9,7 +9,7 @@ var authService = require('../Services/authService')
 // I used a similar get route as in participants js. however, now
 // this get route will be pulling from the posts schema.
 
-router.get('/allPosts', async function(req,res) {
+router.get('/allPosts', async function (req, res) {
   try {
     const allPosts = await posts.find();
     console.log(allPosts)
@@ -27,14 +27,19 @@ router.get('/allPosts', async function(req,res) {
 
 // POST route to save post information from front end 
 
-router.post('/', async (req, res ) => {
-   if (Object.keys(req.body).length === 0){
-     return res.send({
-       message: "Invalid Submission",
-       status: 400
-     });
-   }
-   const post = new posts ({
+router.post('/', async (req, res) => {
+
+  let token = req.headers.authorization;
+  console.log(token)
+  authService.verifyParticipant(token).then( async participant => {
+    if (participant) {
+      if (Object.keys(req.body).length === 0) {
+        return res.send({
+          message: "Invalid Submission",
+          status: 400
+        });
+      }
+      const post = new posts({
         //firstname: req.body.firstname, // when adding jwt token change to user.firstname
         title: req.body.title,
         post: req.body.post,
@@ -43,16 +48,22 @@ router.post('/', async (req, res ) => {
           enum: ['mentalHealth', 'jobs', 'goodNews']
           //this specifies the set of allowed values. 
         }, */
-    }); 
-    console.log(post)
-    try {
-      const savedPost = await post.save();
-      res.json({ error: null, data: savedPost, status: 200 });
-      console.log(savedPost)
-    } catch (error) {
-      console.log(error)
-      res.json({ error, status: 400});
-    }
-  });
+      });
+      console.log(post)
+      try {
+        const savedPost = await post.save();
+        res.json({ error: null, data: savedPost, status: 200 });
+        console.log(savedPost)
+      } catch (error) {
+        console.log(error)
+        res.json({ error, status: 400 });
+      }
 
-    module.exports = router;
+    } else {
+      return res.json({ message: "Please Login" })
+    }
+  })
+
+});
+
+module.exports = router;

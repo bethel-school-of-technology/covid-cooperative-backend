@@ -1,13 +1,13 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require("bcryptjs");
-const models = require('../models/Participant');
+const Participant = require('../models/Participant');
 
 // this is the middleware to validate your token 
 var authService = {
     signParticipant: function (participant) {
         const token = jwt.sign({
             email: participant.email,
-            id: participant.id
+            id: participant._id
         },
             'secretkey',
             {
@@ -19,7 +19,7 @@ var authService = {
     verifyParticipant: function (token) {
         try {
             let decoded = jwt.verify(token, 'secretkey');
-            return models.Participant.findByPk(decoded.id)
+            return Participant.findById(decoded.id)
         } catch (err) {
             console.log(err)
             return new Promise((resolve, reject) => { resolve(null) });
