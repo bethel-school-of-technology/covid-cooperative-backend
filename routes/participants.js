@@ -162,23 +162,23 @@ router.post('/login', async (req, res) => {
   const { error } = loginValidation(req.body);
   //throw validation errors 
   if (error)
-    return res.status(400).json({ error: error.details[0].message });
+    return res.json({ error: error.details[0].message, status: 400 });
   console.log(req.body)
   //find user by email
   const participant = await Participant.findOne({ "client.email": req.body.email });
   console.log(participant)
   //throw error if email is wrong 
   if (!participant) {
-    return res.status(400).json({ error: "Email is wrong" });
+    return res.json({ error: "Email is wrong", status: 400 });
   } else {
     let passwordMatch = authService.comparePasswords(req.body.password, participant.password);
     if (passwordMatch) {
       let token = authService.signParticipant(participant);
       res.cookie('token', token, { httpOnly: true });
-      res.json({ participant, token })
+      res.json({ participant, token, status: 200 })
       console.log(participant)
     } else {
-      res.json({ message: "Email and Passwords do not match" });
+      res.json({ message: "Email and Passwords do not match", status: 400 });
     }
   }
 });
