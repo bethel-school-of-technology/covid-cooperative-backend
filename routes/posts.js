@@ -10,28 +10,35 @@ var authService = require('../Services/authService')
 // this get route will be pulling from the posts schema.
 
 router.get('/allPosts', async function (req, res) {
-  try {
-    const allPosts = await posts.find();
-    console.log(allPosts)
-    res.status(200).json({
-      data: { allPosts }
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err
-    });
-  }
+  let token = req.headers.authorization;
+  console.log(token)
+  authService.verifyParticipant(token).then( async participant => {
+    if (participant) {
+      try {
+        const allPosts = await posts.find();
+        console.log(allPosts)
+        res.status(200).json({
+          data: { allPosts }
+        });
+      } catch (err) {
+        res.status(404).json({
+          status: 'fail',
+          message: err
+        });
+      }
+    } else {
+      return res.json({ message: "Please Login" })
+    }
+  })
 });
 
 
 // POST route to save post information from front end 
 
 router.post('/', async (req, res) => {
-
   let token = req.headers.authorization;
   console.log(token)
-  authService.verifyParticipant(token).then( async participant => {
+  authService.verifyParticipant(token).then(async participant => {
     if (participant) {
       if (Object.keys(req.body).length === 0) {
         return res.send({
@@ -40,7 +47,7 @@ router.post('/', async (req, res) => {
         });
       }
       const post = new posts({
-        //firstname: req.body.firstname, // when adding jwt token change to user.firstname
+        //firstname: user.firstname,
         title: req.body.title,
         post: req.body.post,
         /*category: {
